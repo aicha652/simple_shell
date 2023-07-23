@@ -88,7 +88,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		num_tok++;
 		argv = malloc(sizeof(char *) * num_tok);
-		tok =strtok(line_copy, " \t\n");
+		tok = strtok(line_copy, " \t\n");
 		for (i = 0; tok != NULL; i++)
 		{
 			argv[i] = malloc(sizeof(char) * _strlen(tok) + 1);
@@ -99,13 +99,16 @@ int main(int argc, char **argv, char **envp)
 		free(line_copy);
 		if (argv[0] != NULL)
 		{
-			if (exit_status(argv) != 0)
+			/*if (exit_status(argv) != 0)
 			{
 				_free(argv);
 				exit(EXIT_SUCCESS);
-			}
+			}*/
 			if (_strcmp(argv[0], "ls") == 0)
-				*argv = "/bin/ls";
+			{
+				/**argv = malloc(sizeof(char) * (_strlen("/bin/ls") + 1));*/
+				_strcpy(argv[0], "/bin/ls");
+			}
 			if (_strcmp(argv[0], "env") == 0)
 			{
 				print_env(argv, envp);
@@ -119,6 +122,11 @@ int main(int argc, char **argv, char **envp)
 			else if (_strcmp(argv[0], "unsetenv") == 0)
 			{
 				myunsetenv(argv);
+				_free(argv);
+			}
+			else if (_strcmp(argv[0], "pwd") == 0)
+			{
+				print_dir();
 				_free(argv);
 			}
 			else if (_strcmp(argv[0], "cd") == 0)
