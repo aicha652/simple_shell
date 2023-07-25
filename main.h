@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <limits.h>
 extern char **environ;
 int _strlen(const char *s);
 char *_strcpy(char *dest, char *src);
@@ -16,7 +17,6 @@ int _strcmp(char *s1, char *s2);
 void print_exit(char **argv);
 void print_env (char **argv, char *envp[]);
 void print_dir();
-int exit_status(char **argv);
 int _isdigit(int c);
 int _atoi(char *s);
 int len();
@@ -28,5 +28,7 @@ char *_strcat(char *dest, char *src);
 char *_memcpy(char *dest, char *src, unsigned int n);
 void mysetenv(char **args);
 void myunsetenv(char **args);
+char *_strdup(char *str);
+int print_cd(char **args);
 
 #endif /* MAIN_H */

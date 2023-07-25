@@ -18,7 +18,7 @@ void exec_cmd(char **args)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
-			perror(args[0]);
+			perror("./hsh");
 			_free(args);
 			exit(EXIT_FAILURE);
 		}
@@ -99,15 +99,15 @@ int main(int argc, char **argv, char **envp)
 		free(line_copy);
 		if (argv[0] != NULL)
 		{
-			/*if (exit_status(argv) != 0)
-			{
-				_free(argv);
-				exit(EXIT_SUCCESS);
-			}*/
 			if (_strcmp(argv[0], "ls") == 0)
 			{
-				/**argv = malloc(sizeof(char) * (_strlen("/bin/ls") + 1));*/
-				_strcpy(argv[0], "/bin/ls");
+				free(argv[0]);
+				argv[0] = _strdup("/bin/ls");
+			}
+			if (_strcmp(argv[0], "exit") == 0)
+			{
+				free(line);
+				print_exit(argv);
 			}
 			if (_strcmp(argv[0], "env") == 0)
 			{
@@ -131,12 +131,11 @@ int main(int argc, char **argv, char **envp)
 			}
 			else if (_strcmp(argv[0], "cd") == 0)
 			{
-				cd_funct(argv);
+				print_cd(argv);
 				_free(argv);
 			}
 			else
 			{
-				print_exit(argv);
 				exec_cmd(argv);
 				_free(argv);
 			}

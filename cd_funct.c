@@ -25,31 +25,23 @@ void cd_funct(char **args)
  */
 char *_getenv(char *name)
 {
-	char *word = NULL;
-	char *path;
-	int i = 0;
-	char **array;
+	int i;
+	char *word, *path;
 
-	array = malloc(sizeof(char *) * len());
-	while (environ[i] != NULL)
+	if (name == NULL || environ == NULL)
+		return (NULL);
+
+	for (i = 0; environ[i] != NULL; i++)
 	{
-		array[i] = malloc(sizeof(char) * _strlen(environ[i]));
-		_strcpy(array[i], environ[i]);
-		i++;
-	}
-	i = 0;
-	while (array[i] != NULL)
-	{
-		word = strtok(array[i], "=");
-		if (_strcmp(word, name) == 0)
+		word = strtok(environ[i], "=");
+		if (word != NULL && _strcmp(word, name) == 0)
 		{
 			path = strtok(NULL, "=");
-			free(array);
-			return (path);
+			if (path != NULL)
+				return (_strdup(path));
+			break;
 		}
-		i++;
 	}
-	free(array);
 	return (NULL);
 }
 
